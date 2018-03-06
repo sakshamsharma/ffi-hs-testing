@@ -1,0 +1,6 @@
+.stack-work/
+ffi.cabal
+*~
+*.a
+*.so
+*.h
