@@ -35,3 +35,19 @@ stack exec library-archive-linking-exe
 ```
 
 Voila! You have a Haskell library which uses a `.a` file placed at an absolute (:sad:) location. This library is linked statically, so there is no need to have it in the path during runs.
+
+## Interesting behavior inside a Nix shell
+If you use `nix`, you can do the following to build this:
+```
+nix-shell shell.nix
+> runhaskell Setup.hs configure
+> runhaskell Setup.hs build
+```
+
+Interestingly, the same commands on my Ubuntu system did not work, although it had an older version of `ghc` as compared to the one inside the nix-shell. Similarly, building with `nix** works as well.
+
+**Note**: The nix shell file was generated as follows:
+```
+nix-shell -p cabal2nix --command 'cabal2nix . --shell > shell.nix'
+```
+Then, I had to remove both occurances of `mytest` from `shell.nix`.
