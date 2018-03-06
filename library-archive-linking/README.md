@@ -9,7 +9,21 @@ cd ..
 stack build
 ```
 
-This will not build. `ghc-pkg` (AFAIK) believes linking libraries to `.a` archives (placed at relative paths** is sacrilege.
+This will not build. `ghc-pkg` (AFAIK) believes linking libraries to `.a` archives (placed at relative paths) is sacrilege. It does not complain about this error if you try to make an executable depend on an archive at a relative location. Also, the error only seems to be valid for dynamic linking, and seems to ignore static linking usecases.
+
+The actual error is:
+```
+library-archive-linking-0.1.0.0: library-dirs: golang is a relative path which
+makes no sense (as there is nothing for it to be relative to). You can make
+paths relative to the package database itself by using ${pkgroot}. (use
+--force to override)
+library-archive-linking-0.1.0.0: dynamic-library-dirs: golang is a relative
+path which makes no sense (as there is nothing for it to be relative to). You
+can make paths relative to the package database itself by using ${pkgroot}.
+(use --force to override)
+```
+
+`${pkgroot}` or `--force` do not seem to be concepts understood by stack/cabal. (The error is from `ghc-pkg` as verified independently).
 
 **To make this work** you need to edit `package.yaml` for this project. Observe line 27 (`extra-lib-dirs: golang`). Change it to the absolute path of the golang directory (it must have the built `libmytest.a` file).
 
