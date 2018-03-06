@@ -4,5 +4,6 @@ import           Lib
 
 main :: IO ()
 main = do
-  result <- strFxn "TESTSTRING"
-  putStrLn result
+  line <- getLine
+  result <- strFxn line
+  print result

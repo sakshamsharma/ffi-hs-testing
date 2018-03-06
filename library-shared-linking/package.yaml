@@ -1,6 +1,6 @@
-name:                ffi
+name:                library-shared-linking
 version:             0.1.0.0
-github:              "githubuser/ffi"
+github:              "githubuser/library-shared-linking"
 license:             BSD3
 author:              "Author name here"
 maintainer:          "example@example.com"
@@ -17,37 +17,23 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on Github at <https://github.com/githubuser/ffi#readme>
+description:         Please see the README on Github at <https://github.com/githubuser/library-shared-linking#readme>
 
 dependencies:
 - base >= 4.7 && < 5
 
 library:
-  source-dirs:         src
-  extra-lib-dirs:      $pkgroot/golang
-  extra-libraries:     mytest
-  ghc-options:
-  - -optl-Wl,--verbose
-  - -optl-static -optl-pthread
+  source-dirs: src
 
 executables:
-  ffi-exe:
+  library-shared-linking-exe:
     main:                Main.hs
     source-dirs:         app
+    extra-libraries:     mytest
+    extra-lib-dirs:      golang
     ghc-options:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - ffi
-
-tests:
-  ffi-test:
-    main:                Spec.hs
-    source-dirs:         test
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - ffi
+    - library-shared-linking
