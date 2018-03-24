@@ -1,5 +1,5 @@
 # library-archive-linking
-Demonstrates a possible bug in `ghc-pkg`.
+Demonstrates a not-ideal way of building a haskell library statically linked to another `.a` file. Interestingly, this issue disappears when building with Nix.
 
 ## Building
 ```
@@ -9,7 +9,7 @@ cd ..
 stack build
 ```
 
-This will not build. `ghc-pkg` (AFAIK) believes linking libraries to `.a` archives (placed at relative paths) is sacrilege. It does not complain about this error if you try to make an executable depend on an archive at a relative location. Also, the error only seems to be valid for dynamic linking, and seems to ignore static linking usecases.
+This will not build. `ghc-pkg` (AFAIK) believes linking libraries to `.a` archives (placed at relative paths) is sacrilege, due to restrictions of x86 which prevent inserting a `.a` into another `.a`. It does not complain about this error if you try to make an executable depend on an archive at a relative location.
 
 The actual error is:
 ```
